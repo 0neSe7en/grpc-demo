@@ -5,6 +5,7 @@
 
 ### Test
 
+1. Edit `/etc/hosts` add this line: `127.0.0.1	backend.local frontend.local`
 
 ```
 $ traefik -c traefik.toml
