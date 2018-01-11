@@ -1,0 +1,34 @@
+defaultEntryPoints = ["https"]
+logLevel = "DEBUG"
+[accessLog]
+
+# For secure connection on backend.local
+RootCAs = [ "./backend.cert" ]
+
+[entryPoints]
+  [entryPoints.https]
+  address = ":5001"
+    [entryPoints.https.tls]
+     # For secure connection on frontend.local
+     [[entryPoints.https.tls.certificates]]
+     certFile = "./frontend.cert"
+     keyFile  = "./frontend.key"
+
+
+[web]
+  address = ":8080"
+
+[file]
+
+[backends]
+  [backends.backend1]
+    [backends.backend1.servers.server1]
+    # Access on backend with HTTPS
+    url = "https://backend.local:5000/"
+
+
+[frontends]
+  [frontends.frontend1]
+  backend = "backend1"
+  [frontends.frontend1.routes.test_1]
+      rule = "Host:frontend.local"
